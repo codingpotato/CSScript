@@ -7,6 +7,7 @@
             NeoLua.Run();
             ISB.Run();
             CSScript.Run();
+            MoonSharp.Run();
         }
     }
 }

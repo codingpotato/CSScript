@@ -4,6 +4,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using ISB.Runtime;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
+using MoonSharp.Interpreter;
 using Neo.IronLua;
 
 namespace CSScript.Benchmark
@@ -26,8 +27,20 @@ print(sum)
                 var chunk = lua.CompileChunk(source, "sum.lua", null);
                 var global = lua.CreateEnvironment();
                 global.DoChunk(chunk);
-
             }
+        }
+
+        [Benchmark]
+        public void MoonSharpSum()
+        {
+            string source = @"    
+local sum = 0.0
+for i = 1, 10000000 do
+    sum = sum + i
+end
+print(sum)
+";
+            Script.RunString(source);
         }
 
         [Benchmark]
